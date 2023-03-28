@@ -10,29 +10,32 @@ const InputToDo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setDescription("");
+
     try {
       const body = { description };
-      const response = await fetch("http://localhost:5000/todos", {
+      await fetch("http://localhost:5000/todos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
-      console.log(response);
     } catch (error) {
       console.log(error.message);
     }
+
+    window.location = "/";
   };
 
   return (
     <>
-      <h1 className="text-center mt-4">My To Do List</h1>
+      <h1 className="text-center mt-4 font-weight-bold">MY TO-DO LIST.</h1>
       <form className=" mt-4" onSubmit={handleSubmit}>
         <div className="row d-flex">
           <div className="col-11">
             <input
               type="text"
               className="form-control"
+              placeholder="Type todo"
               value={description}
               onChange={handleChange}
             />

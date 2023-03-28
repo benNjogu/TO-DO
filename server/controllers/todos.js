@@ -56,9 +56,12 @@ const deleteTODO = async (req, res) => {
   try {
     const { id } = req.params;
 
-    pool.query("DELETE FROM todo WHERE t_id = $1", [id]);
+    const deletedToDo = pool.query(
+      "DELETE FROM todo WHERE t_id = $1 RETURNING * ",
+      [id]
+    );
 
-    res.json("deleted!");
+    res.json(deletedToDo.rows[0]);
   } catch (error) {
     console.log(error.message);
   }
